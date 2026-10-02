@@ -32,14 +32,12 @@ public class TaskController {
             normalizedStatus = TaskStatus.valueOf(status.toUpperCase()).name();
         }
 
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
+
         // Query complexity estimation for logging
         int complexityScore = Math.max(0, 10 - query.length());
-        long queryWeight = complexityScore * 100L;
-        try {
-            Thread.sleep(queryWeight);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
 
         System.out.println("[TaskController] q=\"" + query + "\" status=" + normalizedStatus
                 + " page=" + page + " pageSize=" + pageSize
